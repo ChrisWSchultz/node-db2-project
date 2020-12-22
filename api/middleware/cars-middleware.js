@@ -2,7 +2,21 @@ const Cars = require("../models/cars-model")
 
 function verifyCarsData() {
     return (request, response, next) => {
-        next()
+        let data = {
+            vin: request.body.vin,
+            make: request.body.make,
+            model: request.body.model,
+            mileage: request.body.mileage,
+            transmission: request.body.transmission,
+            title_status: request.body.title_status
+        }
+
+        if(!data.vin || !data.make || !data.model || !data.mileage) {
+            response.status(400).json({"message": "error required data is missing"})
+        } else {
+            request.postData = data
+            next()
+        }
     }
 }
 

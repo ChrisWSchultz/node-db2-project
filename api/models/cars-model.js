@@ -13,15 +13,22 @@ function get(id) {
 }
 
 function insert(data) {
-    return "hello world"
+    return db.table(carsTable)
+        .insert(data, "id")
+        .then(([id]) => get(id))
 }
 
 function update(id, data) {
-    return "hello world"
+    return db.table(carsTable)
+        .where("id", id)
+        .update(data)
+        .then(changed => (changed > 0 ? get(id) : null))
 }
 
 function remove(id) {
-    return "hello world"
+    return db.table(carsTable)
+        .where("id", id)
+        .delete()
 }
 
 module.exports = {

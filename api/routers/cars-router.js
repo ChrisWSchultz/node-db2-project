@@ -19,15 +19,34 @@ router.get("/cars/:id", verifyCarsID(), async (request, response) => {
 })
 
 router.post("/cars", verifyCarsData(), async (request, response) => {
-    return response.status(200).json({"message": "hello world"})
+    try {
+        let car = await Cars.insert(request.postData)
+
+        return response.status(201).json(car)
+    } catch (error) {
+        return response.status(500).json({"message": "error unable to insert"})
+    }
 })
 
 router.put("/cars/:id", verifyCarsData(), verifyCarsID(), async (request, response) => {
-    return response.status(200).json({"message": "hello world"})
+    try {
+        let result = await Cars.update(request.carData.id, request.postData)
+
+        return response.status(200).json(result)
+    }
+    catch (error) {
+        return response.status(500).json({"message": "error unable to update"})
+    }
 })
 
-router.delete("/cars/id", verifyCarsID(), async (request, response) => {
-    return response.status(200).json({"message": "hello world"})
+router.delete("/cars/:id", verifyCarsID(), async (request, response) => {
+    try {
+        let result = await Cars.remove(request.carData.id)
+
+        return response.status(200).json(result)
+    } catch (error) {
+        return response.status(500).json({"message": "error unable to delete"})
+    }
 })
 
 module.exports = router
