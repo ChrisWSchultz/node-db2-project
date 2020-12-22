@@ -1,7 +1,15 @@
 const db = require("../../data/dbConfig")
 
+const carsTable = "cars"
+
 function get(id) {
-    return "hello world"
+    if(id) {
+        return db.table(carsTable)
+            .where("id", id)
+            .first()
+    } else {
+        return db.table(carsTable)
+    }
 }
 
 function insert(data) {

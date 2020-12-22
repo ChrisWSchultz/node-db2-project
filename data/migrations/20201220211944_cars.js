@@ -7,6 +7,7 @@ exports.up = function(knex) {
         table.string("model").notNullable()
         table.integer("mileage").notNullable()
         table.string("transmission")
+        table.string("title_status")
     })
 };
 
